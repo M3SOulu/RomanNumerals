@@ -40,7 +40,7 @@ public class TestConvertRomanToInteger {
 	}
 	
 	@Test(expected = InvalidRomanNumberException.class)
-	public void testconvertToIntegerNumberInvalidRomanNumber() throws InvalidRomanNumberException {
+	public void testconvertToIntegerInvalidRomanNumber() throws InvalidRomanNumberException {
 		romNum.setRomanNum("CCD");
 		romNum.convertToInteger();
 	}
