@@ -1,9 +1,19 @@
 import java.util.TreeMap;
 
+/**
+ * classe che implementa un convetitore di numeri romani
+ * @author Mikele
+ *
+ */
 public class RomanNumerals {
+	
 	
 	private TreeMap<Character, Integer> romanVal;
 	
+	
+	/**
+	 * costruttore di default
+	 */
 	public RomanNumerals(){
 		
 		this.romanVal= new TreeMap<Character, Integer>();
@@ -15,10 +25,14 @@ public class RomanNumerals {
 		this.romanVal.put('C',100);
 		this.romanVal.put('D',500);
 		this.romanVal.put('M',1000);
-		//ciao
 		
 	}
-
+	
+	/**
+	 * converte una stringa in numeri romani in un valore intero
+	 * @param romanNum stringa in numeri romani
+	 * @return un valore intero corrispondente al numero romano
+	 */
 	public int convertToInteger(String romanNum) {
 		
 		Character character= romanNum.charAt(romanNum.length()-1);
