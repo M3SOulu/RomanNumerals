@@ -1,12 +1,25 @@
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class TestRomanNumerals {
+import junit.framework.Assert;
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+public class TestRomanNumerals {
+	
+	private RomanNumerals roman;
+	
+	@Before
+	public void setUp() {
+		
+		this.roman=new RomanNumerals();
+		
+	}
+	
+	@Test 
+	public void genericTest(){
+		
+		Assert.assertEquals(1984,roman.convertToInteger("MCMLXXXIV"));
 	}
 
 }
