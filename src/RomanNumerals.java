@@ -1,10 +1,21 @@
 
 public class RomanNumerals {
-	public int convertToInteger(String romanNum) {
-		// To be Implemented
+	public int convertToInteger(String romanNum) throws controlRepeatedIXCMymbolsException, controlRepeatedVLDSymbolsException {
+		
+		
 		if(romanNum == null){
 			return 0;
 		}
+		
+		if(controlRepeatedIXCMymbols(romanNum)){
+			throw new controlRepeatedIXCMymbolsException();
+		}
+		
+		if(controlRepeatedVLDSymbols(romanNum)){
+			throw new controlRepeatedVLDSymbolsException();
+		}
+		
+		
 		
 		int length = romanNum.length();
 		int sum = 0;
