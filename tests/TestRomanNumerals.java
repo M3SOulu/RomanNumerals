@@ -28,5 +28,11 @@ public class TestRomanNumerals {
 		romNum.setRomanNum("VII");
 		Assert.assertEquals(7, romNum.convertToInteger());
 	}
+	
+	@Test
+	public void testconvertToIntegerNumberIIX() {
+		romNum.setRomanNum("IX");
+		Assert.assertEquals(9, romNum.convertToInteger());
+	}
 
 }
