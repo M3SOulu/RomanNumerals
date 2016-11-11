@@ -10,15 +10,29 @@ public class TestRomanNumerals {
 	public void setUp(){
 		romanNum = "";
 	}
+	
 
 	@Test
-	public void  test() throws TooMuchEqualLettersInARowException{
+	public void  test() throws TooMuchEqualLettersInARowException, IllegalCharacterException{
 		//Arrange
 		romanNum = "MCMLXXXIV";
 		//Act
 		int number = RomanNumerals.convertToInteger(romanNum);
 		//Assert
 		assertTrue(number == 1984);
+	}
+	
+	@Test
+	public void convertAnEmptyStringReturnsZero() throws IllegalCharacterException{
+		assertEquals(0, RomanNumerals.convertToInteger(romanNum));
+	}
+	
+	@Test(expected = IllegalCharacterException.class)
+	public void stringContainingAnIllegalCharactersShouldRiseAnException() throws IllegalCharacterException{
+		//Arrange
+		romanNum = "BIV";
+		//Act
+		RomanNumerals.convertToInteger(romanNum);
 	}
 
 }

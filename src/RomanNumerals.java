@@ -1,7 +1,7 @@
 
 public class RomanNumerals {
 
-	public static int convertToInteger(String romanNum) throws TooMuchEqualLettersInARowException {
+	public static int convertToInteger(String romanNum) throws IllegalCharacterException{
 		
 		int arabianNum = 0;
 		int lastValue = 0;
@@ -49,6 +49,9 @@ public class RomanNumerals {
 				arabianNum = addOrSubtract(1, lastValue, arabianNum);
 				lastValue = 1;
 				break;
+				
+			default:
+				throw new IllegalCharacterException();
 			}
 		}
 		return arabianNum;
