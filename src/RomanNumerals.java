@@ -107,7 +107,47 @@ public class RomanNumerals {
 		return decine;
 	}
 	
-	int computeOneHundredLength(char[] romanNumber, int index) {
+	public int aggiungiUnita(char[] romanNumber, int index) throws InvalidUnitException {
+		int unita = 0;
+		int lunghezza = ((romanNumber.length - 1) - index);
+		
+		if(lunghezza == 4) {
+			unita = 8;
+		} else if(lunghezza == 3) {
+			if(romanNumber[index] == 'V' && romanNumber[index + 1] == 'I' && romanNumber[index + 2] == 'I') {
+				unita = 7;
+			} else if(romanNumber[index] == 'I' && romanNumber[index + 1] == 'I' && romanNumber[index + 2] == 'I') {
+				unita = 3;
+			} else {
+				throw new InvalidUnitException();
+			}
+		} else if(lunghezza == 2) {
+			if(romanNumber[index] == 'I' && romanNumber[index + 1] == 'X') {
+				unita = 9;
+			} else if(romanNumber[index] == 'V' && romanNumber[index + 1] == 'I') {
+				unita = 6;
+			} else if(romanNumber[index] == 'I' && romanNumber[index + 1] == 'V') {
+				unita = 4;
+			} else if(romanNumber[index] == 'I' && romanNumber[index + 1] == 'I') {
+				unita = 2;
+			} else {
+				throw new InvalidUnitException();
+			}
+		} else if(lunghezza == 1) {
+			if(romanNumber[index] == 'V') {
+				unita = 5;
+			} else if(romanNumber[index] == 'I') {
+				unita = 1;
+			} else {
+				throw new InvalidUnitException();
+			}
+		} else if()
+		
+	}
+	
+	
+	
+	private int computeOneHundredLength(char[] romanNumber, int index) {
 		int length=0;
 		boolean flag = false;
 		
@@ -123,7 +163,7 @@ public class RomanNumerals {
 		return length;
 	}
 	
-	int computeTensLength(char[] romanNumber, int index) {
+	private int computeTensLength(char[] romanNumber, int index) {
 		int length = 0;
 		boolean flag = false;
 		
