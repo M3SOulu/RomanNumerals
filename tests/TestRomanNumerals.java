@@ -98,7 +98,12 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void OneHundredsAreLongFour() {
-		
+	public void OneHundredsAreLongFour() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("DCCCXCIX".toCharArray(), 0), 899);
+	}
+	
+	@Test(expected = InvalidOneHundredException.class)
+	public void OneHundredsAreLongFourException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("CCCD".toCharArray(), 0), 4984);
 	}
 }
