@@ -1,7 +1,7 @@
 
 public class RomanNumerals {
 	
-	public int convertToInteger(String romanNum) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+	public int convertToInteger(String romanNum) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
 		int arabicNumber = 0;
 		char[] romanNumber = romanNum.toCharArray();
 
@@ -10,15 +10,29 @@ public class RomanNumerals {
 		return arabicNumber;
 	}
 	
-	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
 		int migliaia = 0;
+		int lunghezza = computeOneThousandsLength(romanNumber, 0);
 		
-		if(romanNumber[0] == 'M' && romanNumber[1] == 'M' && romanNumber[2] == 'M') {
-			migliaia = 3000 + aggiungiCentinaia(romanNumber, 3);
-		} else if(romanNumber[0] == 'M' && romanNumber[1] == 'M' && romanNumber[2] != 'M') {
-			migliaia = 2000 + aggiungiCentinaia(romanNumber, 2);
-		} else if(romanNumber[0] == 'M' && romanNumber[1] != 'M') {
-			migliaia = 1000 + aggiungiCentinaia(romanNumber, 1);
+		if(lunghezza == 3) {
+			if(romanNumber[0] == 'M' && romanNumber[1] == 'M' && romanNumber[2] == 'M') {
+				migliaia = 3000 + aggiungiCentinaia(romanNumber, 3);
+			} else {
+				throw new InvalidOneThousandsException();
+			}
+		} else if(lunghezza == 2) {
+			if(romanNumber[0] == 'M' && romanNumber[1] == 'M') {
+				migliaia = 2000 + aggiungiCentinaia(romanNumber, 2);	
+			} else {
+				throw new InvalidOneThousandsException();
+			}
+			
+		} else if(lunghezza == 1) {
+			if(romanNumber[0] == 'M') {
+				migliaia = 1000 + aggiungiCentinaia(romanNumber, 1);
+			} else {
+				throw new InvalidOneThousandsException();
+			}
 		} else {
 			migliaia = 0 + aggiungiCentinaia(romanNumber, 0);
 		}
@@ -158,7 +172,22 @@ public class RomanNumerals {
 		return unita;
 	}
 	
-	
+	private int computeOneThousandsLength(char[] romanNumber, int index) {
+		int length = 0;
+		boolean flag = false;
+		
+		
+		while(index < romanNumber.length && !flag) {
+			if(romanNumber[index] == 'D' || romanNumber[index] == 'C' || romanNumber[index] == 'X' || romanNumber[index] == 'I') {
+				flag = true;
+			} else {
+				index++;
+				length++;
+			}
+		}
+		
+		return length;
+	}
 	
 	private int computeOneHundredLength(char[] romanNumber, int index) {
 		int length=0;

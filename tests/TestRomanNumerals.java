@@ -141,4 +141,9 @@ public class TestRomanNumerals {
 	public void oneHundredsAreLongOneException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		assertEquals(romanNumerals.aggiungiCentinaia("F".toCharArray(), 0), 789);
 	}
+	
+	@Test
+	public void oneThousandsAreLongThree() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("MMCMXCIX".toCharArray()), 2999);
+	}
 }
