@@ -141,8 +141,13 @@ public class RomanNumerals {
 			} else {
 				throw new InvalidUnitException();
 			}
-		} else if()
+		} else if(lunghezza == 0) {
+			unita = 0;
+		} else {
+			throw new InvalidUnitException();
+		}
 		
+		return unita;
 	}
 	
 	
