@@ -171,4 +171,14 @@ public class TestRomanNumerals {
 	public void oneThousandsAreLongOneException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
 		assertEquals(romanNumerals.aggiungiMigliaia("FXC".toCharArray()), 1090);
 	}
+	
+	@Test
+	public void convertValidRomanNumber() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.convertToInteger("MMMCMXCIX"), 3999);
+	}
+	
+	@Test(expected = InvalidOneHundredException.class)
+	public void convertInvalidRomanNumber() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.convertToInteger("MCMMMXCIX"), 3999);
+	}
 }
