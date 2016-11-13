@@ -58,4 +58,9 @@ public class TestRomanNumerals {
 		
 		assertEquals(n.aggiungiUnita("L".toCharArray(), 0), 54654);
 	}
+	
+	@Test
+	public void tensAreLongFour() {
+		
+	}
 }
