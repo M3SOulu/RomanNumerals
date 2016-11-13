@@ -1,7 +1,7 @@
 
 public class RomanNumerals {
 	
-	public int convertToInteger(String romanNum) throws InvalidTensException, InvalidUnitException {
+	public int convertToInteger(String romanNum) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		int arabicNumber = 0;
 		char[] romanNumber = romanNum.toCharArray();
 
@@ -10,7 +10,7 @@ public class RomanNumerals {
 		return arabicNumber;
 	}
 	
-	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException, InvalidUnitException {
+	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		int migliaia = 0;
 		
 		if(romanNumber[0] == 'M' && romanNumber[1] == 'M' && romanNumber[2] == 'M') {
@@ -26,19 +26,25 @@ public class RomanNumerals {
 		return migliaia;
 	}
 	
-	public int aggiungiCentinaia(char[] romanNumber, int index) throws InvalidTensException, InvalidUnitException {
+	public int aggiungiCentinaia(char[] romanNumber, int index) throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		int centinaia = 0;
 		int lunghezza = computeOneHundredLength(romanNumber, index);
 		
 		
 		
 		if(lunghezza == 4) {
-			centinaia = 800 + aggiungiDecine(romanNumber, 4);
+			if(romanNumber[index] == 'D' && romanNumber[index + 1] == 'C' && romanNumber[index + 2] == 'C' && romanNumber[index + 3] == 'C') {
+				centinaia = 800 + aggiungiDecine(romanNumber, 4);				
+			} else {
+				throw new InvalidOneHundredException();
+			}
 		} else if(lunghezza == 3) {
 			if(romanNumber[index] == 'D' && romanNumber[index + 1] == 'C' && romanNumber[index + 2] == 'C' && romanNumber[index + 3] != 'C') {
 				centinaia = 700 + aggiungiDecine(romanNumber, 3);
-			} else {
+			} else if(romanNumber[index] == 'C' && romanNumber[index + 1] == 'C' && romanNumber[index + 2] == 'C') {
 				centinaia = 300 + aggiungiDecine(romanNumber, 3);
+			} else {
+				throw new InvalidOneHundredException();
 			}
 		} else if(lunghezza == 2) {
 			if(romanNumber[index] == 'C' && romanNumber[index + 1] == 'M') {
@@ -47,14 +53,18 @@ public class RomanNumerals {
 				centinaia = 600 + aggiungiDecine(romanNumber, 2);
 			} else if(romanNumber[index] == 'C' && romanNumber[index + 1] == 'D') {
 				centinaia = 400 + aggiungiDecine(romanNumber, 2);
-			} else {
+			} else if(romanNumber[index] == 'C' && romanNumber[index + 1] == 'C'){
 				centinaia = 200 + aggiungiDecine(romanNumber, 2);
+			} else {
+				throw new InvalidOneHundredException();
 			}
 		} else if(lunghezza == 1) {
 			if(romanNumber[index] == 'D') {
 				centinaia = 500 + aggiungiDecine(romanNumber, 1);
-			} else {
+			} else if(romanNumber[index] == 'C'){
 				centinaia = 100 + aggiungiDecine(romanNumber, 1);
+			} else {
+				throw new InvalidOneHundredException();
 			}
 		} else {
 			centinaia = 0 + aggiungiDecine(romanNumber, 0);

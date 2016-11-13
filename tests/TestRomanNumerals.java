@@ -96,4 +96,9 @@ public class TestRomanNumerals {
 	public void tensAreLongOneExcpetion() throws InvalidTensException, InvalidUnitException {
 		assertEquals(romanNumerals.aggiungiDecine("K".toCharArray(), 0), 10);
 	}
+	
+	@Test
+	public void OneHundredsAreLongFour() {
+		
+	}
 }
