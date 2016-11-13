@@ -98,12 +98,47 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void OneHundredsAreLongFour() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+	public void oneHundredsAreLongFour() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		assertEquals(romanNumerals.aggiungiCentinaia("DCCCXCIX".toCharArray(), 0), 899);
 	}
 	
 	@Test(expected = InvalidOneHundredException.class)
-	public void OneHundredsAreLongFourException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+	public void oneHundredsAreLongFourException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
 		assertEquals(romanNumerals.aggiungiCentinaia("CCCD".toCharArray(), 0), 4984);
+	}
+	
+	@Test
+	public void oneHundrendsAreLongThree() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("DCCXCIII".toCharArray(), 0), 793);
+		assertEquals(romanNumerals.aggiungiCentinaia("CCCXCIII".toCharArray(), 0), 393);
+	}
+	
+	@Test(expected = InvalidOneHundredException.class) 
+	public void oneHundrendsAreLongThreeException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("ZZZ".toCharArray(), 0), 49864);
+	}
+	
+	@Test
+	public void oneHundredsAreLongTwo() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("CMXCIX".toCharArray(), 0), 999);
+		assertEquals(romanNumerals.aggiungiCentinaia("DCXCIX".toCharArray(), 0), 699);
+		assertEquals(romanNumerals.aggiungiCentinaia("CDXCIX".toCharArray(), 0), 499);
+		assertEquals(romanNumerals.aggiungiCentinaia("CCXCIX".toCharArray(), 0), 299);
+	}
+	
+	@Test(expected = InvalidOneHundredException.class)
+	public void oneHundredsAreLongTwoException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("FFXCIX".toCharArray(), 0), 999);
+	}
+	
+	@Test
+	public void oneHundredsAreLongOne() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("DXC".toCharArray(), 0), 590);
+		assertEquals(romanNumerals.aggiungiCentinaia("CXC".toCharArray(), 0), 190);
+	}
+	
+	@Test(expected = InvalidOneHundredException.class)
+	public void oneHundredsAreLongOneException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException {
+		assertEquals(romanNumerals.aggiungiCentinaia("F".toCharArray(), 0), 789);
 	}
 }
