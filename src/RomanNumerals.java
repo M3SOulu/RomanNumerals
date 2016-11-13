@@ -1,21 +1,16 @@
 
 public class RomanNumerals {
 	
-	enum numbers{I,V,X,L,C,D,M};
-	
-	public int convertToInteger(String romanNum) throws InvalidTensException {
+	public int convertToInteger(String romanNum) throws InvalidTensException, InvalidUnitException {
 		int arabicNumber = 0;
 		char[] romanNumber = romanNum.toCharArray();
 
-		if(romanNumber[0] == 'M') {
-			arabicNumber = aggiungiMigliaia(romanNumber);
-			
-		} 
+		arabicNumber = aggiungiMigliaia(romanNumber);
 		
-		return 0;
+		return arabicNumber;
 	}
 	
-	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException {
+	public int aggiungiMigliaia(char[] romanNumber) throws InvalidTensException, InvalidUnitException {
 		int migliaia = 0;
 		
 		if(romanNumber[0] == 'M' && romanNumber[1] == 'M' && romanNumber[2] == 'M') {
@@ -31,7 +26,7 @@ public class RomanNumerals {
 		return migliaia;
 	}
 	
-	public int aggiungiCentinaia(char[] romanNumber, int index) throws InvalidTensException {
+	public int aggiungiCentinaia(char[] romanNumber, int index) throws InvalidTensException, InvalidUnitException {
 		int centinaia = 0;
 		int lunghezza = computeOneHundredLength(romanNumber, index);
 		
@@ -68,47 +63,47 @@ public class RomanNumerals {
 		return centinaia;
 	}
 	
-	public int aggiungiDecine(char[] romanNumber, int index) throws InvalidTensException {
+	public int aggiungiDecine(char[] romanNumber, int index) throws InvalidTensException, InvalidUnitException {
 		int decine = 0;
 		int lunghezza = computeTensLength(romanNumber, index);
 		
 		if(lunghezza == 4) {
-			if(romanNumber[index] == 'V' && romanNumber[index + 1] == 'I' && romanNumber[index + 2] == 'I' && romanNumber[index + 3] == 'I') {
-				decine = 80;	
+			if(romanNumber[index] == 'L' && romanNumber[index + 1] == 'X' && romanNumber[index + 2] == 'X' && romanNumber[index + 3] == 'X') {
+				decine = 80 + aggiungiUnita(romanNumber, 4);	
 			} else {
 				throw new InvalidTensException();
 			}
 			
 		} else if(lunghezza == 3) {
 			if(romanNumber[index] == 'L' && romanNumber[index + 1] == 'X' && romanNumber[index + 2] == 'X') {
-				decine = 70;
+				decine = 70 + aggiungiUnita(romanNumber, 3);
 			} else if(romanNumber[index] == 'X' && romanNumber[index + 1] == 'X' && romanNumber[index + 2] == 'X'){
-				decine = 30;
+				decine = 30 + aggiungiUnita(romanNumber, 3);
 			} else {
 				throw new InvalidTensException();
 			}
 		} else if(lunghezza == 2) {
 			if(romanNumber[index] == 'X' && romanNumber[index + 1] == 'C') {
-				decine = 90;
+				decine = 90 + aggiungiUnita(romanNumber, 2);
 			} else if(romanNumber[index] == 'L' && romanNumber[index + 1] == 'X') {
-				decine = 60;
+				decine = 60 + aggiungiUnita(romanNumber, 2);
 			} else if(romanNumber[index] == 'X' && romanNumber[index + 1] == 'L') {
-				decine = 40;
+				decine = 40 + aggiungiUnita(romanNumber, 2);
 			} else if(romanNumber[index] == 'X' && romanNumber[index + 1] == 'X') {
-				decine = 20;
+				decine = 20 + aggiungiUnita(romanNumber, 2);
 			} else {
 				throw new InvalidTensException();
 			}
 		} else if(lunghezza == 1) {
 			if(romanNumber[index] == 'L') {
-				decine = 50;
+				decine = 50 + aggiungiUnita(romanNumber, 1);
 			} else if(romanNumber[index] == 'X') {
-				decine = 10;
+				decine = 10 + aggiungiUnita(romanNumber, 1);
 			} else {
 				throw new InvalidTensException();
 			}
 		} else {
-			decine = 0;
+			decine = 0 + aggiungiUnita(romanNumber, 0);
 		}
 		
 		return decine;
