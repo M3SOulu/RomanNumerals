@@ -109,7 +109,7 @@ public class RomanNumerals {
 	
 	public int aggiungiUnita(char[] romanNumber, int index) throws InvalidUnitException {
 		int unita = 0;
-		int lunghezza = ((romanNumber.length - 1) - index);
+		int lunghezza = (romanNumber.length - index);
 		
 		if(lunghezza == 4) {
 			unita = 8;
@@ -141,10 +141,8 @@ public class RomanNumerals {
 			} else {
 				throw new InvalidUnitException();
 			}
-		} else if(lunghezza == 0) {
-			unita = 0;
 		} else {
-			throw new InvalidUnitException();
+			unita = 0;
 		}
 		
 		return unita;
