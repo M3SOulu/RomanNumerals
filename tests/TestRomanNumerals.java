@@ -144,6 +144,31 @@ public class TestRomanNumerals {
 	
 	@Test
 	public void oneThousandsAreLongThree() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("MMMXCIX".toCharArray()), 3099);
+	}
+	
+	@Test(expected = InvalidOneThousandsException.class)
+	public void oneThousandsAreLongThreeException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("WWW".toCharArray()), 45646);
+	}
+	
+	@Test
+	public void oneThousandsAreLongTwo() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
 		assertEquals(romanNumerals.aggiungiMigliaia("MMCMXCIX".toCharArray()), 2999);
+	}
+	
+	@Test(expected = InvalidOneThousandsException.class)
+	public void oneThousandsAreLongTwoException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("FFCMXCIX".toCharArray()), 789456);
+	}
+	
+	@Test
+	public void oneThousandsAreLongOne() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("MXC".toCharArray()), 1090);
+	}
+	
+	@Test(expected = InvalidOneThousandsException.class)
+	public void oneThousandsAreLongOneException() throws InvalidTensException, InvalidUnitException, InvalidOneHundredException, InvalidOneThousandsException {
+		assertEquals(romanNumerals.aggiungiMigliaia("FXC".toCharArray()), 1090);
 	}
 }
