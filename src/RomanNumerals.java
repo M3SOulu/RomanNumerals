@@ -1,19 +1,13 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class RomanNumerals {
-	private ArrayList<String> romanStrings;
+	private List<Character> romanStrings;
 	private static Integer[] romanNumbers = { 1, 5, 10, 50, 100, 500, 1000 };
-
+	
 	public RomanNumerals()
 	{
-		romanStrings = new ArrayList<>();
-		romanStrings.add( "I" );
-		romanStrings.add( "V" );
-		romanStrings.add( "X" );
-		romanStrings.add( "L" );
-		romanStrings.add( "C" );
-		romanStrings.add( "D" );
-		romanStrings.add( "M" );
+		romanStrings = getRomanNumbers();
 	}
 
 	/**
@@ -98,6 +92,11 @@ public class RomanNumerals {
 	}
 
 
+	/**
+	 * 
+	 * @param romanNum
+	 * @return
+	 */
 	public boolean control3( String romanNum )
 	{
 		if( romanNum.length() == 1 ){
@@ -105,10 +104,8 @@ public class RomanNumerals {
 		}
 
 		for( int i = romanNum.length() - 2; i >= 0; i-- ){
-			if( romanNum.charAt( i ) == 'I' && ! ( romanNum.charAt( i + 1 ) == 'I' || 
-					romanNum.charAt( i + 1 ) == 'V' || 
-					romanNum.charAt( i + 1 ) == 'X' ) ){
-				return false;
+			if( romanNum.charAt( i ) == 'I' ){
+				
 			}
 			if( romanNum.charAt( i ) == 'X' ){
 
@@ -121,7 +118,25 @@ public class RomanNumerals {
 		return true;
 	}
 
-
+	/**
+	 * execute all controls on roman number
+	 * @param romanNum
+	 * @return true if the string is a valid roman number
+	 */
+	public boolean isValidRoman( String romanNum )
+	{
+		if( ! isRoman( romanNum ) ){
+			return false;
+		}
+		if( ! control1( romanNum ) ){
+			return false;
+		}
+		if( ! control2( romanNum ) ){
+			return false;
+		}
+		
+		return true;
+	}
 
 	/**
 	 * convert a roman number into an integer
@@ -130,20 +145,32 @@ public class RomanNumerals {
 	 * @throws InvalidRomanNumberException
 	 */
 	public int convertToInteger( String romanNum ) throws InvalidRomanNumberException{
-		if( ! isRoman( romanNum ) ){
-			throw new InvalidRomanNumberException();
-		}
-
-		if( ! control1( romanNum ) ){
-			throw new InvalidRomanNumberException();
-		}
-
-		if( ! control2( romanNum ) ){
+		if( ! isValidRoman( romanNum ) ){
 			throw new InvalidRomanNumberException();
 		}
 
 
 
 		return 0;		
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @return a list that contains roman numbers
+	 */
+	public static List<Character> getRomanNumbers()
+	{
+		List<Character> romanNumbers = new ArrayList<>();
+		romanNumbers.add( 'I' );
+		romanNumbers.add( 'V' );
+		romanNumbers.add( 'X' );
+		romanNumbers.add( 'L' );
+		romanNumbers.add( 'C' );
+		romanNumbers.add( 'D' );
+		romanNumbers.add( 'M' );
+		
+		return romanNumbers;
 	}
 }
