@@ -1,10 +1,11 @@
 
 public class RomanNumerals {
-	public static int convertToInteger(String romanNumber) {
+	public static int convertToInteger(String romanNumber) throws InvalidRomanNumbersException {
 
 		int decimal = 0;
 		int lastNumber = 0;
 		String romanNumeral = romanNumber.toUpperCase();
+		checkRomanNumerals(romanNumeral);
 		/*
 		 * operation to be performed on upper cases even if user enters roman
 		 * values in lower case chars
@@ -60,7 +61,11 @@ public class RomanNumerals {
 		}
 	}
 	
-	private static void checkRomanNumerals(String romanNumber){
+	private static void checkRomanNumerals(String romanNumber) throws InvalidRomanNumbersException{
+		
+		if (romanNumber.contains("IIII")) {
+			throw new InvalidRomanNumbersException();
+		}
 		
 		
 		
