@@ -7,7 +7,23 @@ public class RomanNumerals {
 	
 	public RomanNumerals()
 	{
-		romanStrings = getRomanNumbers();
+		setRomanNumbers();
+	}
+	
+	/**
+	 * set roman numbers
+	 */
+	private void setRomanNumbers()
+	{
+		romanStrings = new ArrayList<>();
+		
+		romanStrings.add( 'I' );
+		romanStrings.add( 'V' );
+		romanStrings.add( 'X' );
+		romanStrings.add( 'L' );
+		romanStrings.add( 'C' );
+		romanStrings.add( 'D' );
+		romanStrings.add( 'M' );
 	}
 
 	/**
@@ -107,15 +123,15 @@ public class RomanNumerals {
 		boolean state = true;
 		for( int i = romanNum.length() - 2; i >= 0; i-- ){
 			if( romanNum.charAt( i ) == 'I' ){
-				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 0, 3 ) );
+				state = romanStrings.subList( 0, 3 ).contains( romanNum.charAt( i+1 ) );
 			}
 			if( romanNum.charAt( i ) == 'X' ){
-				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 2, 5 ) );
+				state = romanStrings.subList( 2, 5 ).contains( romanNum.charAt( i+1 ) );
 			}
 			if( romanNum.charAt( i ) == 'C' ){
-				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 4, 7 ) );
+				state = romanStrings.subList( 4, 7 ).contains( romanNum.charAt( i+1 ) );
 			}
-			if( ! state ){
+			if( state == false ){
 				return false;
 			}
 		}
@@ -123,23 +139,6 @@ public class RomanNumerals {
 		return true;
 	}
 	
-	/**
-	 * Check if symbols contains only validSymbols
-	 * @param symbols string to control
-	 * @param validSymbols symbols allowd
-	 * @return true if the string contains only symbols allowed
-	 */
-	private boolean isValidSubtraction( String symbols, List<Character> validSymbols )
-	{
-		
-		for( int i = 0; i < symbols.length(); i++ ){
-			if( ! validSymbols.contains( symbols.charAt( i ) ) ){
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
 	/**
 	 * Only one subtraction can be made per numeral ('XC' is allowed, 'XXC' is not).
@@ -148,6 +147,26 @@ public class RomanNumerals {
 	 */
 	public boolean control4( String romanNum )
 	{
+		if( romanNum.length() == 2 ){
+			return true;	//there arent double subtractions
+		}
+
+		boolean state = true;
+		for( int i = romanNum.length() - 2; i > 0; i-- ){
+			if( romanNum.charAt( i ) == 'I' && romanStrings.subList( 1, 3 ).contains( romanNum.charAt( i+1 ) ) ){
+				state = ! romanStrings.subList( 0, 1 ).contains( romanNum.charAt( i-1 ) );
+			}
+			if( romanNum.charAt( i ) == 'X' && romanStrings.subList( 3, 5 ).contains( romanNum.charAt( i+1 ) ) ){
+				state = ! romanStrings.subList( 2, 3 ).contains( romanNum.charAt( i-1 ) );
+			}
+			if( romanNum.charAt( i ) == 'C' && romanStrings.subList( 5, 7 ).contains( romanNum.charAt( i+1 ) ) ){
+				state = ! romanStrings.subList( 4, 5 ).contains( romanNum.charAt( i-1 ) );
+			}
+			if( state == false ){
+				return false;
+			}
+		}
+
 		return true;
 	}
 	
@@ -158,6 +177,26 @@ public class RomanNumerals {
 	 */
 	public boolean control5( String romanNum )
 	{
+		if( romanNum.length() == 1 ){
+			return true;	//there arent subtractions
+		}
+
+		boolean state = true;
+		for( int i = romanNum.length() - 2; i >= 0; i-- ){
+			if( romanNum.charAt( i ) == 'V' ){
+				state = romanStrings.subList( 0, 1 ).contains( romanNum.charAt( i+1 ) );
+			}
+			if( romanNum.charAt( i ) == 'L' ){
+				state = romanStrings.subList( 0, 3 ).contains( romanNum.charAt( i+1 ) );
+			}
+			if( romanNum.charAt( i ) == 'D' ){
+				state = romanStrings.subList( 0, 5 ).contains( romanNum.charAt( i+1 ) );
+			}
+			if( state == false ){
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -201,6 +240,7 @@ public class RomanNumerals {
 			throw new InvalidRomanNumberException();
 		}
 
+		
 
 
 		return 0;		
@@ -208,21 +248,5 @@ public class RomanNumerals {
 	
 	
 	
-	/**
-	 * 
-	 * @return a list that contains roman numbers
-	 */
-	public static List<Character> getRomanNumbers()
-	{
-		List<Character> romanNumbers = new ArrayList<>();
-		romanNumbers.add( 'I' );
-		romanNumbers.add( 'V' );
-		romanNumbers.add( 'X' );
-		romanNumbers.add( 'L' );
-		romanNumbers.add( 'C' );
-		romanNumbers.add( 'D' );
-		romanNumbers.add( 'M' );
-		
-		return romanNumbers;
-	}
+	
 }

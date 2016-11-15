@@ -12,19 +12,19 @@ public class TestRomanNumeralsControl2 {
 		r = new RomanNumerals();
 	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1V() throws InvalidRomanNumberException{
-		r.convertToInteger( "VV" );
+	@Test
+	public void testControl2Max1V(){
+		assertEquals( false, r.control2( "VV" ) );
 	}
 
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1L() throws InvalidRomanNumberException{
-		r.convertToInteger( "LL" );
+	@Test
+	public void testControl2Max1L(){
+		assertEquals( false, r.control2( "LL" ) );
 	}
 
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1D() throws InvalidRomanNumberException{
-		r.convertToInteger( "DD" );
+	@Test
+	public void testControl2Max1D(){
+		assertEquals( false, r.control2( "DD" ) );
 	}
 
 	@Test

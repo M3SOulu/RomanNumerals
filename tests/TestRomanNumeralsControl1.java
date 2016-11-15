@@ -23,30 +23,30 @@ public class TestRomanNumeralsControl1 {
 		assertEquals(true, r.isRoman( "M" ));
 	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testIsNotRoman() throws InvalidRomanNumberException{
-		r.convertToInteger( "9" );
+	@Test
+	public void testIsNotRoman(){
+		assertEquals( false, r.isRoman( "9" ) );
 	}
 	
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl1Max3I() throws InvalidRomanNumberException{
-		r.convertToInteger( "IIII" );
+	@Test
+	public void testControl1Max3I(){
+		assertEquals( false, r.control1( "IIII" ) );
 	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl1Max3X() throws InvalidRomanNumberException{
-		r.convertToInteger( "XXXX" );
+	@Test
+	public void testControl1Max3X(){
+		assertEquals( false, r.control1( "XXXX" ) );
 	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl1Max3C() throws InvalidRomanNumberException{
-		r.convertToInteger( "CCCC" );
+	@Test
+	public void testControl1Max3C(){
+		assertEquals( false, r.control1( "CCCC" ) );
 	}
 
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl1Max3M() throws InvalidRomanNumberException{
-		r.convertToInteger( "MMMM" );
+	@Test
+	public void testControl1Max3M(){
+		assertEquals( false, r.control1( "MMMM" ) );
 	}
 	
 	@Test

@@ -13,42 +13,48 @@ public class TestRomanNumeralsControl3 {
 	}
 	
 	@Test
-	public void testControl3GoodSubIV() throws InvalidRomanNumberException{
+	public void testControl3NoSub(){
+		assertEquals( true, r.control3( "I" ) );
+	}
+	
+	@Test
+	public void testControl3GoodSubIV(){
 		assertEquals( true, r.control3( "IV" ) );
 	}
 
 	@Test
-	public void testControl3GoodSubIX() throws InvalidRomanNumberException{
+	public void testControl3GoodSubIX(){
 		assertEquals( true, r.control3( "IX" ) );
 	}
 
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl3InvalidSubIL() throws InvalidRomanNumberException{
-		r.convertToInteger( "IL" );
+	@Test
+	public void testControl3InvalidSubIL(){
+		assertEquals( false, r.control3( "IL" ) );
 	}
 
 	@Test
-	public void testControl3GoodSubXL() throws InvalidRomanNumberException{
+	public void testControl3GoodSubXL(){
 		assertEquals( true, r.control3( "XL" ) );
 	}
 
 	@Test
-	public void testControl3GoodSubXC() throws InvalidRomanNumberException{
+	public void testControl3GoodSubXC(){
 		assertEquals( true, r.control3( "XC" ) );
 	}
 
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl3InvalidSubXD() throws InvalidRomanNumberException{
-		r.convertToInteger( "XD" );
+	@Test
+	public void testControl3InvalidSubXD(){
+		assertEquals( false, r.control3( "XD" ) );
+		
 	}
 
 	@Test
-	public void testControl3GoodSubCD() throws InvalidRomanNumberException{
+	public void testControl3GoodSubCD(){
 		assertEquals( true, r.control3( "CD" ) );
 	}
 
 	@Test
-	public void testControl3GoodSubCM() throws InvalidRomanNumberException{
+	public void testControl3GoodSubCM(){
 		assertEquals( true, r.control3( "CM" ) );
 	}
 
