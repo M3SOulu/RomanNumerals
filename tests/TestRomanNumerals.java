@@ -2,12 +2,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import junit.framework.Assert;
 
 public class TestRomanNumerals {
 	
 	private RomanNumerals roman;
+
 	
 	@Before
 	public void setUp() {
@@ -17,7 +19,7 @@ public class TestRomanNumerals {
 	}
 	
 	@Test 
-	public void singleCharTest(){
+	public void singleCharTest() throws InvalidRomanNumeralsException{
 		
 		Assert.assertEquals(1,roman.convertToInteger("I"));
 		Assert.assertEquals(5,roman.convertToInteger("V"));
@@ -30,7 +32,7 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void minorPrevChar(){
+	public void minorPrevChar() throws InvalidRomanNumeralsException{
 		
 		Assert.assertEquals(4,roman.convertToInteger("IV"));
 		Assert.assertEquals(9,roman.convertToInteger("IX"));
@@ -38,6 +40,23 @@ public class TestRomanNumerals {
 		Assert.assertEquals(90,roman.convertToInteger("XC"));
 		Assert.assertEquals(400,roman.convertToInteger("CD"));
 		Assert.assertEquals(900,roman.convertToInteger("CM"));
+	}
+	
+	@Test
+	public void convertToIntegerTest() throws InvalidRomanNumeralsException{
+		
+		Assert.assertEquals(89,roman.convertToInteger("LXXXIX"));
+		Assert.assertEquals(88,roman.convertToInteger("LXXXVIII"));
+		Assert.assertEquals(999,roman.convertToInteger("CMXCIX"));
+		Assert.assertEquals(3999,roman.convertToInteger("MMMCMXCIX"));
+		Assert.assertEquals(898,roman.convertToInteger("DCCCXCVIII"));
+		Assert.assertEquals(900,roman.convertToInteger("CM"));
+	}
+	
+	@Test(expected=InvalidRomanNumeralsException.class)
+	public void InvalidRomanNumeralsExceptionTest() throws InvalidRomanNumeralsException{
+		
+		roman.convertToInteger("XXXMMXMLP");
 	}
 	
 	@Test
@@ -84,7 +103,6 @@ public class TestRomanNumerals {
 	@Test
 	public void checkForFifthRuleTest(){
 		
-
 		Assert.assertFalse(roman.checkForFifthRule("XXVL"));
 		Assert.assertFalse(roman.checkForFifthRule("IXVM"));
 		Assert.assertFalse(roman.checkForFifthRule("MMDM"));

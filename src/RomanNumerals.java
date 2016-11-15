@@ -35,37 +35,50 @@ public class RomanNumerals {
 	 * @param romanNum stringa in numeri romani
 	 * @return un valore intero corrispondente al numero romano
 	 */
-	public int convertToInteger(String romanNum) {
+	public int convertToInteger(String romanNum) throws InvalidRomanNumeralsException{
 		
 		romanNum=romanNum.toUpperCase();
+		int result=0;
 		
-		Character character= romanNum.charAt(romanNum.length()-1);
-		
-		int result=romanVal.get(character);
-		
-		for(int i=romanNum.length()-2; i>=0;i--){
+		if(isValidRomanNumb(romanNum)){
+				
+			Character character= romanNum.charAt(romanNum.length()-1);
 			
-			if(romanVal.get(romanNum.charAt(i))<romanVal.get(romanNum.charAt(i+1))){
+			result=romanVal.get(character);
+			
+			for(int i=romanNum.length()-2; i>=0;i--){
 				
-				result-=romanVal.get(romanNum.charAt(i));
-				
-			}else{
-				
-				result+=romanVal.get(romanNum.charAt(i));
+				if(romanVal.get(romanNum.charAt(i))<romanVal.get(romanNum.charAt(i+1))){
+					
+					result-=romanVal.get(romanNum.charAt(i));
+					
+				}else{
+					
+					result+=romanVal.get(romanNum.charAt(i));
+				}
 			}
+			
+		}else{
+			
+			throw new InvalidRomanNumeralsException();
 		}
+		
+		
 		
 		
 		return result;
 		
 	} 
 	
-	boolean isValidRomanNumb(String roman){
+	/**
+	 * check if the roman number is valid
+	 * @param roman not null
+	 * @return true if it is valid, false otherwise
+	 */
+	boolean isValidRomanNumb(String roman){		
 		
-		
-		//TODO implementation
-		
-		return false;
+		return (checkForFirstRule(roman) && checkForSecondRule(roman) && checkForThirdRule(roman) 
+				&& checkForFourthRule(roman) && checkForFifthRule(roman));
 	}
 	
 	
