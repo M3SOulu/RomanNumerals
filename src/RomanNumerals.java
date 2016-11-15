@@ -1,10 +1,17 @@
 
 public class RomanNumerals {
-	String romanNum;
-
 	enum symbolRoman {
 		I, C, X, L, D, M, V;
 	}
+
+	private String romanNum;
+	private final static int I = 1;
+	private final static int V = 5;
+	private final static int X = 10;
+	private final static int L = 50;
+	private final static int C = 100;
+	private final static int D = 500;
+	private final static int M = 1000;
 
 	public RomanNumerals(String romanNum) throws IllegalNumberRomanFormatException {
 
@@ -14,9 +21,23 @@ public class RomanNumerals {
 	}
 
 	public int convertToInteger() throws IllegalNumberRomanFormatException {
-		int integer = -1;
+		int Ivalue = -1;
+		int Vvalue = -1;
+		int Xvalue = -1;
+		int Lvalue = -1;
+		int Cvalue = -1;
+		int Dvalue = -1;
+		int Mvalue = -1;
 
-		integer = convertI() + convertV() + convertX() + convertL() + convertC() + convertD() + convertM();
+		Ivalue = convertI();
+		Vvalue = convertV();
+		Xvalue = convertX();
+		Lvalue = convertL();
+		Cvalue = convertC();
+		Dvalue = convertD();
+		Mvalue = convertM();
+
+		int integer = Ivalue + Vvalue + Xvalue + Lvalue + Cvalue + Dvalue + Mvalue;
 
 		return integer;
 
@@ -43,37 +64,55 @@ public class RomanNumerals {
 
 	}
 
-	public int convertI() throws IllegalNumberRomanFormatException {
+	private int convertI() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
-		int count = 0;
+		int numberICurrence = 0;
 		int x = 0;
 		int value = 0;
 
 		for (char c : romanNumA) {
 			x++;
 			if (c == symbolRoman.I.toString().charAt(0)) {
-				count++;
+				numberICurrence++;
 			}
 		}
-		if (count > 0) {
-			if (count > 3) {
+
+		if (numberICurrence > 0) {
+			if (numberICurrence > 3) {
+
 				throw new IllegalNumberRomanFormatException();
-			} else if (count == 1 && x > 0) {
-				value = -count;
-			} else if (count > 1 && count != x) {
-				if (!romanNum.endsWith(symbolRoman.I.toString())) {
-					throw new IllegalNumberRomanFormatException();
+
+			} else if (numberICurrence == 1 && x > 1) {
+
+				char d2 = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.I.toString().charAt(0)) + 1);
+				if (romanNumA[romanNumA.length - 1] != 'I') {
+
+					char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.I.toString().charAt(0)) + 1);
+
+					if ((d != 'V') && (d != 'X')) {
+
+						throw new IllegalNumberRomanFormatException();
+
+					} else if ((d == 'V') || (d == 'X')) {
+
+						value = -numberICurrence * 1;
+
+					} else {
+						value = numberICurrence * 1;
+					}
 				}
+
 			} else {
 
-				value = count;
+				value = numberICurrence * 1;
 			}
+
 		}
 		return value;
 
 	}
 
-	public int convertX() throws IllegalNumberRomanFormatException {
+	private int convertX() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberXCurrene = 0;
 		int cicleCount = 0;
@@ -85,38 +124,42 @@ public class RomanNumerals {
 				numberXCurrene++;
 			}
 		}
+
 		if (numberXCurrene > 0) {
 			if (numberXCurrene > 3) {
 
 				throw new IllegalNumberRomanFormatException();
 
-			} else if (numberXCurrene == 1 && cicleCount > 1) {
+			} else {
 
-				if (romanNum.length() > 1) {
+				if (romanNumA[romanNumA.length - 1] != 'X') {
+
 					char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.X.toString().charAt(0)) + 1);
+
 					if ((d != 'L') && (d != 'C') && (d != 'V') && (d != 'I')) {
 
 						throw new IllegalNumberRomanFormatException();
 
-					} else if ((d == 'L') && (d == 'C')) {
-
-						value = -numberXCurrene * 10;
-
-					} else {
+					} else if ((d == 'L') || (d == 'C')) {
+						if (numberXCurrene >= 2) {
+							throw new IllegalNumberRomanFormatException();
+						} else {
+							value = -numberXCurrene * 10;
+						}
+					}else{
 						value = numberXCurrene * 10;
 					}
+				} else {
+					value = numberXCurrene * 10;
 				}
-
-			} else {
-
-				value = numberXCurrene * 10;
 			}
+
 		}
 		return value;
 
 	}
 
-	public int convertV() throws IllegalNumberRomanFormatException {
+	private int convertV() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberVoccurrence = 0;
 
@@ -147,7 +190,7 @@ public class RomanNumerals {
 
 	}
 
-	public int convertL() throws IllegalNumberRomanFormatException {
+	private int convertL() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberVoccurrence = 0;
 
@@ -162,7 +205,7 @@ public class RomanNumerals {
 		if (numberVoccurrence > 0) {
 			if (numberVoccurrence >= 2) {
 				throw new IllegalNumberRomanFormatException();
-			} else if (romanNum.length() > 1) {
+			} else if (romanNumA[romanNumA.length - 1] != 'L') {
 
 				char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.L.toString().charAt(0)) + 1);
 				if (d == 'X') {
@@ -178,7 +221,7 @@ public class RomanNumerals {
 
 	}
 
-	public int convertD() throws IllegalNumberRomanFormatException {
+	private int convertD() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberVoccurrence = 0;
 
@@ -194,7 +237,8 @@ public class RomanNumerals {
 		if (numberVoccurrence > 0) {
 			if (numberVoccurrence >= 2) {
 				throw new IllegalNumberRomanFormatException();
-			} else if (romanNum.length() > 1) {
+			} 
+			else if (romanNumA[romanNumA.length -1] != 'D') {
 
 				char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.D.toString().charAt(0)) + 1);
 				if (d == 'C') {
@@ -210,7 +254,7 @@ public class RomanNumerals {
 
 	}
 
-	public int convertC() throws IllegalNumberRomanFormatException {
+	private int convertC() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberXCurrene = 0;
 		int cicleCount = 0;
@@ -223,33 +267,40 @@ public class RomanNumerals {
 			}
 		}
 
-		if (numberXCurrene > 3) {
+		if (numberXCurrene > 0) {
 
-			throw new IllegalNumberRomanFormatException();
+			if (numberXCurrene > 3) {
 
-		} else if (numberXCurrene == 1 && cicleCount > 1) {
+				throw new IllegalNumberRomanFormatException();
 
-			if (romanNum.length() > 1) {
-				char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.C.toString().charAt(0)) + 1);
-				if ((d == 'D') || (d == 'M')) {
+			} else if (numberXCurrene == 1 && cicleCount > 1) {
 
-					value = -numberXCurrene * 100;
+				if (romanNumA[romanNumA.length - 1] != 'C') {
 
+					char d = romanNum.charAt(romanNum.lastIndexOf(symbolRoman.C.toString().charAt(0)) + 1);
+
+					if ((d == 'D') || (d == 'M')) {
+
+						value = -numberXCurrene * 100;
+
+					} else {
+						value = numberXCurrene * 100;
+					}
 				} else {
 					value = numberXCurrene * 100;
 				}
+
+			} else {
+
+				value = numberXCurrene * 100;
 			}
-
-		} else {
-
-			value = numberXCurrene * 100;
 		}
 
 		return value;
 
 	}
 
-	public int convertM() throws IllegalNumberRomanFormatException {
+	private int convertM() throws IllegalNumberRomanFormatException {
 		char[] romanNumA = this.romanNum.toCharArray();
 		int numberXCurrene = 0;
 
