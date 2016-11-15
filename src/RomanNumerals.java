@@ -3,7 +3,7 @@ import java.util.List;
 
 public class RomanNumerals {
 	private List<Character> romanStrings;
-	private static Integer[] romanNumbers = { 1, 5, 10, 50, 100, 500, 1000 };
+	//private static Integer[] romanNumbers = { 1, 5, 10, 50, 100, 500, 1000 };
 	
 	public RomanNumerals()
 	{
@@ -93,28 +93,71 @@ public class RomanNumerals {
 
 
 	/**
-	 * 
+	 * The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 
+	 * 2 next highest values ('IV' and 'IX', 'XL' and 'XC', 'CD' and 'CM').
 	 * @param romanNum
-	 * @return
+	 * @return true if is correct
 	 */
 	public boolean control3( String romanNum )
 	{
 		if( romanNum.length() == 1 ){
-			return true;
+			return true;	//there arent subtractions
 		}
 
+		boolean state = true;
 		for( int i = romanNum.length() - 2; i >= 0; i-- ){
 			if( romanNum.charAt( i ) == 'I' ){
-				
+				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 0, 3 ) );
 			}
 			if( romanNum.charAt( i ) == 'X' ){
-
+				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 2, 5 ) );
 			}
 			if( romanNum.charAt( i ) == 'C' ){
-
+				state = isValidSubtraction( romanNum.substring( i+1, romanNum.length() ), getRomanNumbers().subList( 4, 7 ) );
+			}
+			if( ! state ){
+				return false;
 			}
 		}
 
+		return true;
+	}
+	
+	/**
+	 * Check if symbols contains only validSymbols
+	 * @param symbols string to control
+	 * @param validSymbols symbols allowd
+	 * @return true if the string contains only symbols allowed
+	 */
+	private boolean isValidSubtraction( String symbols, List<Character> validSymbols )
+	{
+		
+		for( int i = 0; i < symbols.length(); i++ ){
+			if( ! validSymbols.contains( symbols.charAt( i ) ) ){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Only one subtraction can be made per numeral ('XC' is allowed, 'XXC' is not).
+	 * @param romanNum
+	 * @return true if is correct
+	 */
+	public boolean control4( String romanNum )
+	{
+		return true;
+	}
+	
+	/**
+	 * The '5' symbols ('V', 'L', and 'D') can never be subtracted.
+	 * @param romanNum
+	 * @return true if is correct
+	 */
+	public boolean control5( String romanNum )
+	{
 		return true;
 	}
 
@@ -132,6 +175,15 @@ public class RomanNumerals {
 			return false;
 		}
 		if( ! control2( romanNum ) ){
+			return false;
+		}
+		if( ! control3( romanNum ) ){
+			return false;
+		}
+		if( ! control4( romanNum ) ){
+			return false;
+		}
+		if( ! control5( romanNum ) ){
 			return false;
 		}
 		

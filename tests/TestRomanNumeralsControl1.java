@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.*;
 
-public class TestRomanNumeralsControls {
+public class TestRomanNumeralsControl1 {
 	RomanNumerals r;
 	
 	@Before
@@ -55,23 +55,11 @@ public class TestRomanNumeralsControls {
 	}
 	
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1V() throws InvalidRomanNumberException{
-		r.convertToInteger( "VV" );
-	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1L() throws InvalidRomanNumberException{
-		r.convertToInteger( "LL" );
-	}
 	
-	@Test(expected = InvalidRomanNumberException.class)
-	public void testControl2Max1D() throws InvalidRomanNumberException{
-		r.convertToInteger( "DD" );
-	}
 	
-	@Test
-	public void testControl2Positive(){
-		assertEquals( true, r.control2( "D" ) );
-	}
+	
+	
+	
+	
 }
