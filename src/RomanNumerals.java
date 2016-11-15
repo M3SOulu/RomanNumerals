@@ -1,3 +1,4 @@
+import java.util.HashSet;
 
 public class RomanNumerals {
 	public static int convertToInteger(String romanNumber) throws InvalidRomanNumbersException {
@@ -5,6 +6,8 @@ public class RomanNumerals {
 		int decimal = 0;
 		int lastNumber = 0;
 		String romanNumeral = romanNumber.toUpperCase();
+
+		// Check if Roman number is OK
 		checkRomanNumerals(romanNumeral);
 		/*
 		 * operation to be performed on upper cases even if user enters roman
@@ -60,16 +63,22 @@ public class RomanNumerals {
 			return lastDecimal + decimal;
 		}
 	}
-	
-	private static void checkRomanNumerals(String romanNumber) throws InvalidRomanNumbersException{
+
+	private static void checkRomanNumerals(String romanNumber) throws InvalidRomanNumbersException {
+
+		HashSet<String> stringeInvalide = new HashSet<>();
+		stringeInvalide.add("IIII");
+		stringeInvalide.add("XXXX");
+		stringeInvalide.add("CCCC");
+		stringeInvalide.add("MMMM");
+		stringeInvalide.add("VV");
+		stringeInvalide.add("LL");
+		stringeInvalide.add("DD");
 		
-		if (romanNumber.contains("IIII")) {
+		if (stringeInvalide.contains(romanNumber)) {
 			throw new InvalidRomanNumbersException();
 		}
-		
-		
-		
-		
+
 	}
 
 }
