@@ -6,7 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ TestRomanNumerals.class, TestExceptionRomanNumerals.class })
 public class AllTests {
 	
-	
-	
+	/* Eseguire questa classe Suite per avviare tutte le classi di test */
 
 }

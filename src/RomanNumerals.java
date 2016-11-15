@@ -65,6 +65,17 @@ public class RomanNumerals {
 	}
 
 	private static void checkRomanNumerals(String romanNumber) throws InvalidRomanNumbersException {
+		/*
+		 * There were certain rules that the numerals followed which should be
+		 * observed:
+		 * 
+		 * The symbols 'I', 'X', 'C', and 'M' can be repeated at most 3 times in
+		 * a row. The symbols 'V', 'L', and 'D' can never be repeated. The '1'
+		 * symbols ('I', 'X', and 'C') can only be subtracted from the 2 next
+		 * highest values ('IV' and 'IX', 'XL' and 'XC', 'CD' and 'CM'). Only
+		 * one subtraction can be made per numeral ('XC' is allowed, 'XXC' is
+		 * not). The '5' symbols ('V', 'L', and 'D') can never be subtracted.
+		 */
 
 		HashSet<String> stringeInvalide = new HashSet<>();
 		stringeInvalide.add("IIII");
@@ -74,7 +85,13 @@ public class RomanNumerals {
 		stringeInvalide.add("VV");
 		stringeInvalide.add("LL");
 		stringeInvalide.add("DD");
-		
+		stringeInvalide.add("IIV");
+		stringeInvalide.add("IIX");
+		stringeInvalide.add("XXL");
+		stringeInvalide.add("XXC");
+		stringeInvalide.add("CCD");
+		stringeInvalide.add("CCM");
+
 		if (stringeInvalide.contains(romanNumber)) {
 			throw new InvalidRomanNumbersException();
 		}
