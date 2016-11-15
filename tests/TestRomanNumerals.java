@@ -13,7 +13,7 @@ public class TestRomanNumerals {
 	
 
 	@Test
-	public void  test() throws TooMuchEqualLettersInARowException, IllegalCharacterException{
+	public void  testConversionOfValidString() throws TooMuchEqualLettersInARowException, IllegalCharacterException, TooMuchSymbolRepetitionsException, IllegalSubtractionException{
 		//Arrange
 		romanNum = "MCMLXXXIV";
 		//Act
@@ -23,16 +23,21 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void convertAnEmptyStringReturnsZero() throws IllegalCharacterException{
+	public void convertAnEmptyStringReturnsZero() throws IllegalCharacterException, TooMuchSymbolRepetitionsException, IllegalSubtractionException{
 		assertEquals(0, RomanNumerals.convertToInteger(romanNum));
 	}
 	
 	@Test(expected = IllegalCharacterException.class)
-	public void stringContainingAnIllegalCharactersShouldRiseAnException() throws IllegalCharacterException{
+	public void stringContainingAnIllegalCharactersShouldRiseAnException() throws IllegalCharacterException, TooMuchSymbolRepetitionsException, IllegalSubtractionException{
 		//Arrange
 		romanNum = "BIV";
 		//Act
 		RomanNumerals.convertToInteger(romanNum);
+	}
+	
+	@Test
+	public void test(){
+		fail();
 	}
 
 }
