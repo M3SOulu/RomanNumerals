@@ -6,6 +6,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import exceptions.IllegalCharacterException;
+import exceptions.IllegalSubtractionException;
+import exceptions.TooMuchSymbolRepetitionsException;
+
 @RunWith(Parameterized.class)
 public class TestSymbolRepetitionException {
 

@@ -1,3 +1,6 @@
+import exceptions.IllegalCharacterException;
+import exceptions.IllegalSubtractionException;
+import exceptions.TooMuchSymbolRepetitionsException;
 
 public class RomanNumerals {
 

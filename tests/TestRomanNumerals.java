@@ -2,6 +2,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import exceptions.IllegalCharacterException;
+import exceptions.IllegalSubtractionException;
+import exceptions.TooMuchEqualLettersInARowException;
+import exceptions.TooMuchSymbolRepetitionsException;
+
 public class TestRomanNumerals {
 	
 
