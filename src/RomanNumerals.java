@@ -1,9 +1,6 @@
 
 public class RomanNumerals {
 
-	//Serve a tener traccia se l'ultima operazione fatta è stata una sottrazione.
-	private static boolean subtractionJustMade = false;
-	
 	public static int convertToInteger(String romanNum)
 			throws IllegalCharacterException, TooMuchSymbolRepetitionsException, IllegalSubtractionException {
 
@@ -17,7 +14,8 @@ public class RomanNumerals {
 
 		int arabianNum = 0;
 		int lastValue = 0;
-		
+		int numberToSum = 0;
+
 		romanNum = romanNum.toUpperCase();
 
 		// Scelgo di processare la stringa da destra a sinistra
@@ -29,8 +27,18 @@ public class RomanNumerals {
 			switch (charToConvert) {
 
 			case 'M':
-				if (numberOfM < 3) {
-					arabianNum += addOrSubtract(1000, lastValue);
+
+				if (numberOfM < 3) {	
+					/*
+					 * Se l'ultima operazione è stata una sottrazione ed il prossimo simbolo 
+					 * ha un valore minore o uguale a quello sottratto in precedenza
+					 * si tratta di due sottrazioni consecutive (illegale)
+					 */
+					if (numberToSum < 0 && Math.abs(addOrSubtract(1000, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					
+					numberToSum = addOrSubtract(1000, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 1000;
 					numberOfM++;
 				} else {
@@ -39,8 +47,13 @@ public class RomanNumerals {
 				break;
 
 			case 'D':
+
 				if (numberOfD < 1) {
-					arabianNum += addOrSubtract(500, lastValue);
+					
+					if (numberToSum < 0 && Math.abs(addOrSubtract(500, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					numberToSum = addOrSubtract(500, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 500;
 					numberOfD++;
 				} else {
@@ -49,8 +62,14 @@ public class RomanNumerals {
 				break;
 
 			case 'C':
+				
 				if (numberOfC < 3) {
-					arabianNum += addOrSubtract(100, lastValue);
+					
+					if (numberToSum < 0 && Math.abs(addOrSubtract(100, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					
+					numberToSum = addOrSubtract(100, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 100;
 					numberOfC++;
 				} else {
@@ -59,8 +78,14 @@ public class RomanNumerals {
 				break;
 
 			case 'L':
+				
 				if (numberOfL < 1) {
-					arabianNum += addOrSubtract(50, lastValue);
+					
+					if (numberToSum < 0 && Math.abs(addOrSubtract(50, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					
+					numberToSum = addOrSubtract(50, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 50;
 					numberOfL++;
 				} else {
@@ -70,7 +95,10 @@ public class RomanNumerals {
 
 			case 'X':
 				if (numberOfX < 3) {
-					arabianNum += addOrSubtract(10, lastValue);
+					if (numberToSum < 0 && Math.abs(addOrSubtract(10, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					numberToSum = addOrSubtract(10, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 10;
 					numberOfX++;
 				} else {
@@ -80,7 +108,10 @@ public class RomanNumerals {
 
 			case 'V':
 				if (numberOfV < 1) {
-					arabianNum += addOrSubtract(5, lastValue);
+					if (numberToSum < 0 && Math.abs(addOrSubtract(5, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					numberToSum = addOrSubtract(5, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 5;
 					numberOfV++;
 				} else {
@@ -90,7 +121,12 @@ public class RomanNumerals {
 
 			case 'I':
 				if (numberOfI < 3) {
-					arabianNum += addOrSubtract(1, lastValue);
+					
+					if (numberToSum < 0 && Math.abs(addOrSubtract(1, lastValue)) <= lastValue)
+						throw new IllegalSubtractionException();
+					
+					numberToSum = addOrSubtract(1, lastValue);
+					arabianNum += numberToSum;
 					lastValue = 1;
 					numberOfI++;
 				} else {
@@ -105,7 +141,7 @@ public class RomanNumerals {
 		return arabianNum;
 	}
 
-	public static int addOrSubtract(int actualValue, int previousValue) throws IllegalSubtractionException {
+	private static int addOrSubtract(int actualValue, int previousValue) throws IllegalSubtractionException {
 
 		/*
 		 * Nel caso in cui il valore del carattere da processare è minore del
@@ -113,31 +149,25 @@ public class RomanNumerals {
 		 * finora. Altrimenti sommalo.
 		 */
 		if (actualValue < previousValue) {
-			
-			//Only	one	subtraction	can	be	made	per	numeral	('XC'	is	allowed,	'XXC'	is	not).	
-			if(subtractionJustMade)
-				throw new IllegalSubtractionException();
 
 			// The '5' symbols ('V', 'L', and 'D') can never be subtracted.
 			if (actualValue == 5 || actualValue == 50 || actualValue == 500)
 				throw new IllegalSubtractionException();
-			
+
 			/*
-			 * The   '1'	symbols	('I',	'X',	and	'C')	can	only	be	subtracted	
-			 * from	the	2	next	highest	values	('IV'	and	
-			 * 'IX',	'XL'	and	'XC',	'CD'	and	'CM').	
+			 * The '1' symbols ('I', 'X', and 'C') can only be subtracted from
+			 * the 2 next highest values ('IV' and 'IX', 'XL' and 'XC', 'CD' and
+			 * 'CM').
 			 */
-			if( (actualValue == 1 && previousValue != 5 && previousValue != 10) || 
-					(actualValue == 10 && previousValue != 50 && previousValue != 100) ||
-					(actualValue == 100 && previousValue != 500 && previousValue != 1000)){
+			if ((actualValue == 1 && previousValue != 5 && previousValue != 10)
+					|| (actualValue == 10 && previousValue != 50 && previousValue != 100)
+					|| (actualValue == 100 && previousValue != 500 && previousValue != 1000)) {
 				throw new IllegalSubtractionException();
 			}
-			
-			subtractionJustMade = true;
+
 			return -actualValue;
 
 		} else {
-			subtractionJustMade = false;
 			return actualValue;
 		}
 
