@@ -41,26 +41,55 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void countMatchesTest(){
-		
-		Assert.assertEquals(RomanNumerals.countMatches("CCC", "M"),0);
-		Assert.assertEquals(RomanNumerals.countMatches("MCMQMMPMMM", "M"),7);
-	}
-	
-	@Test
 	public void checkForFirstRuleTest(){
 		
 		Assert.assertTrue(roman.checkForFirstRule("XCCMMM"));
+		Assert.assertTrue(roman.checkForFirstRule("XXIMXX"));
 		Assert.assertFalse(roman.checkForFirstRule("IIIICMM"));
-		Assert.assertFalse(roman.checkForFirstRule("XXIMXX"));
-		Assert.assertFalse(roman.checkForFirstRule("CCCIXXC"));
+		Assert.assertFalse(roman.checkForFirstRule("CCCCIXXC"));
 		Assert.assertFalse(roman.checkForFirstRule("IIXXXMMMM"));
 	}
 	
 	@Test
+	public void checkForSecondRuleTest(){
+		
+		Assert.assertFalse(roman.checkForSecondRule("XXVVMQ"));
+		Assert.assertFalse(roman.checkForSecondRule("LLDXM"));
+		Assert.assertFalse(roman.checkForSecondRule("DDI"));
+		
+		
+	}
+	@Test
 	public void checkForThirdRuleTest(){
 		
-		Assert.assertFalse(roman.checkForFirstRule("IL"));
+		Assert.assertFalse(roman.checkForThirdRule("XXIXMQ"));
+		Assert.assertFalse(roman.checkForThirdRule("XLDXM"));
+		Assert.assertFalse(roman.checkForThirdRule("XIMLCII"));
+		Assert.assertTrue(roman.checkForThirdRule("XXLLLI"));
+
+	}
+	
+	@Test
+	public void checkForFourthRuleTest(){
+		
+		Assert.assertTrue(roman.checkForFourthRule("IX"));
+		Assert.assertTrue(roman.checkForFourthRule("XL"));
+		Assert.assertTrue(roman.checkForFourthRule("XC"));
+		Assert.assertFalse(roman.checkForFourthRule("IIX"));
+		Assert.assertFalse(roman.checkForFourthRule("XXL"));
+		Assert.assertFalse(roman.checkForFourthRule("CCM"));
+
+	}
+	
+	@Test
+	public void checkForFifthRuleTest(){
+		
+
+		Assert.assertFalse(roman.checkForFifthRule("XXVL"));
+		Assert.assertFalse(roman.checkForFifthRule("IXVM"));
+		Assert.assertFalse(roman.checkForFifthRule("MMDM"));
+		Assert.assertFalse(roman.checkForFifthRule("LC"));
+		Assert.assertTrue(roman.checkForFifthRule("CL"));
 
 	}
 

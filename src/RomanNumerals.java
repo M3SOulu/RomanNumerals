@@ -1,4 +1,6 @@
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * classe che implementa un convetitore di numeri romani
@@ -75,49 +77,73 @@ public class RomanNumerals {
 	 */
 	boolean checkForFirstRule(String roman){
 		
-		boolean result=false;
+		//the regex depict INVALID combinations of chars accepted
+		Pattern pattern=Pattern.compile("(IIII+)|(XXXX+)|(CCCC+)|(MMMM+)");
+		Matcher matcher= pattern.matcher(roman);
 		
-		if(countMatches(roman, "I")<=3 && countMatches(roman, "X")<=3 && countMatches(roman, "C")<=3 && countMatches(roman, "M")<=3)
-			result=true;
-			 
-		return result;
+		//negation in returned
+		return !matcher.find();
 	}
 	
 	/**
 	 * second rule:The symbols 'V', 'L', and 'D' can never be repeated.
 	 * @param roman
-	 * @return
+	 * @return true if is adibed the rule
 	 */
 	boolean checkForSecondRule(String roman){
 		
-		boolean result=false;
+		//the regex depict INVALID combinations of chars accepted
+		Pattern pattern=Pattern.compile("(VV+)|(LL+)|(DD+)");
+		Matcher matcher= pattern.matcher(roman);
 		
-		if(countMatches(roman, "V")<=1 && countMatches(roman, "L")<=1 && countMatches(roman, "D")<=1)
-			result=true;
-			 
-		return result;
-	}
-	
-	boolean checkforThirdRule(String roman){
-		
-		boolean result=false;
-		
-		if(!roman.matches("(I[LCDM])|(V[XLCDM])|(X[DM])|(L[CDM])|DM"))
-			result=true;
-		
-		return result;
+		//negation in returned
+		return !matcher.find();
 	}
 	
 	/**
-	 * return the number of occurences of substr in string 
-	 * 
-	 * @param string not null
-	 * @param substr not null
-	 * @return
+	 * third rule: The '1' symbols ('I', 'X', and 'C') can only be subtracted from the 2 next highest values ('IV' and 'IX', 'XL' and 'XC', 'CD' and 'CM').
+	 * @param roman
+	 * @return true if is adibed the rule
 	 */
-	 static int countMatches(String string, String substr ){
+	boolean checkForThirdRule(String roman){
 		
-		return string.length() -string.replace(substr, "").length();
+		//the regex depict INVALID combinations of chars accepted
+		Pattern pattern=Pattern.compile("(I[LCDM])|(V[XLCDM])|(X[DM])|(L[CDM])|(DM)");
+		Matcher matcher= pattern.matcher(roman);
+		
+		//negation in returned
+		return !matcher.find();
 	}
 	
+	
+	/**
+	 * fourth rule: Only one subtraction can be made per numeral ('XC' is allowed, 'XXC' is not).
+	 * @param roman
+	 * @return true if is adibed the rule
+	 */
+	boolean checkForFourthRule(String roman){
+		
+		//the regex depict INVALID combinations of chars accepted
+		Pattern pattern=Pattern.compile("(II[VX])|(XX[LC])|(CC[DM])");
+		Matcher matcher= pattern.matcher(roman);
+		
+		//negation in returned
+		return !matcher.find();
+	
+	}
+	
+	/**
+	 * fifth rule:The '5' symbols ('V', 'L', and 'D') can never be subtracted.
+	 * @param roman
+	 * @return true if is adibed the rule
+	 */
+	boolean checkForFifthRule(String roman){
+		
+		//the regex depict INVALID combinations of chars accepted
+		Pattern pattern=Pattern.compile("(V[XLCDM])|(L[CDM])|(DM)");
+		Matcher matcher= pattern.matcher(roman);
+		
+		//negation in returned
+		return !matcher.find();
+	}
 }
