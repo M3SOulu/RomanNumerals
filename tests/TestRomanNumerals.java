@@ -17,7 +17,7 @@ public class TestRomanNumerals {
 	}
 	
 	@Test 
-	public void SingleCharTest(){
+	public void singleCharTest(){
 		
 		Assert.assertEquals(1,roman.convertToInteger("I"));
 		Assert.assertEquals(5,roman.convertToInteger("V"));
@@ -30,7 +30,7 @@ public class TestRomanNumerals {
 	}
 	
 	@Test
-	public void MinorPrevChar(){
+	public void minorPrevChar(){
 		
 		Assert.assertEquals(4,roman.convertToInteger("IV"));
 		Assert.assertEquals(9,roman.convertToInteger("IX"));
@@ -38,6 +38,30 @@ public class TestRomanNumerals {
 		Assert.assertEquals(90,roman.convertToInteger("XC"));
 		Assert.assertEquals(400,roman.convertToInteger("CD"));
 		Assert.assertEquals(900,roman.convertToInteger("CM"));
+	}
+	
+	@Test
+	public void countMatchesTest(){
+		
+		Assert.assertEquals(RomanNumerals.countMatches("CCC", "M"),0);
+		Assert.assertEquals(RomanNumerals.countMatches("MCMQMMPMMM", "M"),7);
+	}
+	
+	@Test
+	public void checkForFirstRuleTest(){
+		
+		Assert.assertTrue(roman.checkForFirstRule("XCCMMM"));
+		Assert.assertFalse(roman.checkForFirstRule("IIIICMM"));
+		Assert.assertFalse(roman.checkForFirstRule("XXIMXX"));
+		Assert.assertFalse(roman.checkForFirstRule("CCCIXXC"));
+		Assert.assertFalse(roman.checkForFirstRule("IIXXXMMMM"));
+	}
+	
+	@Test
+	public void checkForThirdRuleTest(){
+		
+		Assert.assertFalse(roman.checkForFirstRule("IL"));
+
 	}
 
 }
