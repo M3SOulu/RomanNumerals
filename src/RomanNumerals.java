@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class RomanNumerals {
+public class RomanNumerals{
 	private List<Character> romanStrings;
-	//private static Integer[] romanNumbers = { 1, 5, 10, 50, 100, 500, 1000 };
+	private Integer[] romanNumbers = { 1, 5, 10, 50, 100, 500, 1000 };
 	
 	public RomanNumerals()
 	{
@@ -24,6 +24,25 @@ public class RomanNumerals {
 		romanStrings.add( 'C' );
 		romanStrings.add( 'D' );
 		romanStrings.add( 'M' );
+	}
+	
+	/**
+	 * compare roman numbers symbol
+	 * @param arg0
+	 * @param arg1
+	 * @return true if arg0 is lower than arg1
+	 */
+	private boolean isLower( Character arg0, Character arg1 ) {
+		// TODO Auto-generated method stub
+		int value0 = romanNumbers[ romanStrings.indexOf( arg0 ) ];
+		int value1 = romanNumbers[ romanStrings.indexOf( arg1 ) ];
+		
+		if( (value0 - value1) < 0 ){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/**
@@ -123,14 +142,20 @@ public class RomanNumerals {
 		boolean state = true;
 		for( int i = romanNum.length() - 2; i >= 0; i-- ){
 			if( romanNum.charAt( i ) == 'I' ){
+				//allowed symbols after I are: I, V, X
 				state = romanStrings.subList( 0, 3 ).contains( romanNum.charAt( i+1 ) );
 			}
 			if( romanNum.charAt( i ) == 'X' ){
-				state = romanStrings.subList( 2, 5 ).contains( romanNum.charAt( i+1 ) );
+				//allowed symbols after X are: I, V, X, L, C
+				state = romanStrings.subList( 0, 5 ).contains( romanNum.charAt( i+1 ) );
 			}
-			if( romanNum.charAt( i ) == 'C' ){
-				state = romanStrings.subList( 4, 7 ).contains( romanNum.charAt( i+1 ) );
-			}
+			//after C all symbols are allowed so the control has no sense
+			
+			//if( romanNum.charAt( i ) == 'C' ){
+				//allowed symbols after C are: I, V, X, L, C, D, M
+				//state = romanStrings.subList( 0, 7 ).contains( romanNum.charAt( i+1 ) );
+			//}
+			
 			if( state == false ){
 				return false;
 			}
@@ -153,14 +178,14 @@ public class RomanNumerals {
 
 		boolean state = true;
 		for( int i = romanNum.length() - 2; i > 0; i-- ){
-			if( romanNum.charAt( i ) == 'I' && romanStrings.subList( 1, 3 ).contains( romanNum.charAt( i+1 ) ) ){
-				state = ! romanStrings.subList( 0, 1 ).contains( romanNum.charAt( i-1 ) );
+			if( romanNum.charAt( i ) == 'I' && isLower( 'I', romanNum.charAt( i+1 ) ) ){
+				state = (romanNum.charAt( i-1 ) != 'I');
 			}
-			if( romanNum.charAt( i ) == 'X' && romanStrings.subList( 3, 5 ).contains( romanNum.charAt( i+1 ) ) ){
-				state = ! romanStrings.subList( 2, 3 ).contains( romanNum.charAt( i-1 ) );
+			if( romanNum.charAt( i ) == 'X' && isLower( 'X', romanNum.charAt( i+1 ) ) ){
+				state = (romanNum.charAt( i-1 ) != 'X');
 			}
-			if( romanNum.charAt( i ) == 'C' && romanStrings.subList( 5, 7 ).contains( romanNum.charAt( i+1 ) ) ){
-				state = ! romanStrings.subList( 4, 5 ).contains( romanNum.charAt( i-1 ) );
+			if( romanNum.charAt( i ) == 'C' && isLower( 'C', romanNum.charAt( i+1 ) ) ){
+				state = (romanNum.charAt( i-1 ) != 'C');
 			}
 			if( state == false ){
 				return false;
@@ -239,12 +264,23 @@ public class RomanNumerals {
 		if( ! isValidRoman( romanNum ) ){
 			throw new InvalidRomanNumberException();
 		}
-
 		
+		
+		int n = 0;
+		for( int i = romanNum.length() - 1; i >= 0; i-- ){
+			int value = romanNumbers[ romanStrings.indexOf( romanNum.charAt( i ) ) ];
+			
+			if( (i != romanNum.length() - 1) && isLower( romanNum.charAt( i ), romanNum.charAt( i+1 ) )  ){
+				value -= (value*2);		//the value is subtracted
+			}
+			
+			n += value;
+		}
 
-
-		return 0;		
+		return n;		
 	}
+
+	
 	
 	
 	
